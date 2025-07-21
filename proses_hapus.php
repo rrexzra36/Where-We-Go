@@ -2,6 +2,7 @@
 session_start();
 require 'database/connection.php';
 
+// Pastikan ada ID yang dikirim
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header('Location: index.php');
     exit();
@@ -11,46 +12,51 @@ $id = $_GET['id'];
 $upload_dir = 'assets/uploads/';
 
 try {
+    // Mulai transaksi untuk memastikan semua proses berhasil atau tidak sama sekali
     $conn->beginTransaction();
 
-    // 1. Get all image file names related to this entry
-    // Get main photo
+    // 1. Ambil nama file foto utama dari tabel 'entri'
     $stmt_main = $conn->prepare("SELECT foto_utama FROM entri WHERE id = ?");
     $stmt_main->execute([$id]);
     $entry = $stmt_main->fetch(PDO::FETCH_ASSOC);
 
-    // Get gallery photos
+    // 2. Ambil semua nama file foto dari tabel 'galeri' yang terkait
     $stmt_gallery = $conn->prepare("SELECT nama_file FROM galeri WHERE id_entri = ?");
     $stmt_gallery->execute([$id]);
     $gallery = $stmt_gallery->fetchAll(PDO::FETCH_ASSOC);
 
-    // 2. Delete physical files from server
+    // 3. Hapus file fisik dari folder 'assets/uploads/'
+    // Hapus foto utama
     if ($entry && file_exists($upload_dir . $entry['foto_utama'])) {
         unlink($upload_dir . $entry['foto_utama']);
     }
+    // Hapus semua foto galeri
     foreach ($gallery as $photo) {
         if (file_exists($upload_dir . $photo['nama_file'])) {
             unlink($upload_dir . $photo['nama_file']);
         }
     }
 
-    // 3. Delete data from database
-    // Just delete from 'entri' table, data in 'galeri' will be deleted automatically
-    // because 'ON DELETE CASCADE' is set on the Foreign Key.
+    // 4. Hapus data dari database
+    // Cukup hapus dari tabel 'entri'. Data di 'galeri' akan ikut terhapus
+    // karena sudah diatur 'ON DELETE CASCADE' pada Foreign Key di database.
     $stmt_delete = $conn->prepare("DELETE FROM entri WHERE id = ?");
     $stmt_delete->execute([$id]);
 
+    // Jika semua langkah di atas berhasil, konfirmasi perubahan
     $conn->commit();
 
+    // Kirim pesan sukses dan kembali ke halaman utama
     $_SESSION['status'] = 'success';
-    $_SESSION['message'] = 'Travel story has been deleted.';
+    $_SESSION['message'] = 'Cerita perjalanan telah dihapus.';
     header('Location: index.php');
     exit();
 } catch (Exception $e) {
+    // Jika ada satu langkah pun yang gagal, batalkan semua perubahan
     $conn->rollBack();
     $_SESSION['status'] = 'failed';
-    $_SESSION['message'] = 'Failed to delete data: ' . $e->getMessage();
-    // Redirect back to detail page if failed
+    $_SESSION['message'] = 'Gagal menghapus data: ' . $e->getMessage();
+    // Kembali ke halaman detail jika gagal
     header('Location: entri.php?id=' . $id);
     exit();
 }

@@ -114,6 +114,9 @@ body {
     font-weight: 500;
     color: var(--text-primary);
 }
+.entry-item-link small {
+    font-weight: 400; /* 400 adalah nilai untuk ketebalan font normal */
+}
 
 /* --- Styling Halaman Form (Tambah & Edit) --- */
 .form-container-card {
@@ -268,7 +271,37 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-
 main.container-fluid {
     flex: 1; /* Mendorong konten utama untuk mengisi ruang yang tersedia */
+}
+/* --- Styling untuk Tombol Hapus di Halaman Index --- */
+.entry-item-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid var(--border-color);
+}
+.entry-item-container:last-child {
+    border-bottom: none;
+}
+.entry-item-container:hover {
+    background-color: var(--bg-main);
+}
+.entry-item-link {
+    flex-grow: 1;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.5rem;
+}
+.entry-item-actions {
+    padding-left: 1rem;
+}
+.btn-action-delete {
+    background: none;
+    border: none;
+    color: #000; /* Mengatur warna ikon menjadi hitam */
+    font-size: 1.1rem; /* Sedikit memperbesar ikon */
 }

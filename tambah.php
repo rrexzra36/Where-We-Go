@@ -1,5 +1,13 @@
 <?php include 'templates/header.php'; ?>
 
+<?php
+if (isset($_SESSION['status']) && isset($_SESSION['message']) && $_SESSION['status'] == 'error') {
+    echo '<div class="alert alert-danger mx-4 mx-md-5">' . htmlspecialchars($_SESSION['message']) . '</div>';
+    // Hapus session setelah ditampilkan agar tidak muncul lagi saat halaman di-refresh
+    unset($_SESSION['status']);
+    unset($_SESSION['message']);
+}
+?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
 <div class="content-header mb-4">

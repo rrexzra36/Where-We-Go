@@ -3,6 +3,13 @@ session_start();
 require 'database/connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (empty($_POST['latitude']) || empty($_POST['longitude'])) {
+        $_SESSION['status'] = 'error';
+        $_SESSION['message'] = 'Error: Please select a location on the map before saving.';
+        header('Location: tambah.php');
+        exit();
+    }
+
     $title = $_POST['judul'];
     $visit_date = $_POST['tanggal_kunjungan'];
     $location_name = $_POST['lokasi_nama'];

@@ -55,16 +55,22 @@ if ($jam >= 5 && $jam < 12) {
 <div class="list-container">
     <?php if (count($entri_list) > 0): ?>
         <?php foreach ($entri_list as $entri): ?>
-            <a href="entri.php?id=<?= $entri['id'] ?>" class="entry-item text-decoration-none">
-                <div class="row g-3 align-items-center">
-                    <div class="col-auto"><img src="assets/uploads/<?= htmlspecialchars($entri['foto_utama']) ?>" class="entry-thumbnail" alt="<?= htmlspecialchars($entri['judul']) ?>"></div>
-                    <div class="col">
-                        <h6 class="entry-title mb-1"><?= htmlspecialchars($entri['judul']) ?></h6><small class="text-secondary d-block"><i class="bi bi-geo-alt me-1"></i><?= htmlspecialchars($entri['lokasi_nama']) ?></small>
+            <div class="entry-item-container">
+                <a href="entri.php?id=<?= $entri['id'] ?>" class="entry-item-link">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <img src="assets/uploads/<?= htmlspecialchars($entri['foto_utama']) ?>" class="entry-thumbnail" alt="<?= htmlspecialchars($entri['judul']) ?>">
+                        </div>
+                        <div class="col">
+                            <h6 class="entry-title mb-1"><?= htmlspecialchars($entri['judul']) ?></h6>
+                            <small class="text-secondary d-block"><i class="bi bi-geo-alt-fill me-1"></i><?= htmlspecialchars($entri['lokasi_nama']) ?> / <?= htmlspecialchars($entri['tanggal_kunjungan']) ?></small>
+                        </div>
                     </div>
-                    <div class="col-md-3 text-md-end"><small class="text-secondary"><?= date('d M Y', strtotime($entri['tanggal_kunjungan'])) ?></small></div>
-                    <div class="col-auto"><i class="bi bi-chevron-right text-secondary"></i></div>
-                </div>
-            </a>
+                </a>
+                <button onclick="confirmDelete(<?= $entri['id'] ?>)" class="btn btn-sm btn-action-delete">
+                    <i class="bi bi-trash-fill me-2"></i>
+                </button>
+            </div>
         <?php endforeach; ?>
     <?php else: ?>
         <div class="text-center p-5 bg-light rounded">
@@ -72,5 +78,24 @@ if ($jam >= 5 && $jam < 12) {
         </div>
     <?php endif; ?>
 </div>
+
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: "Cerita perjalanan ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'proses_hapus.php?id=' + id;
+            }
+        })
+    }
+</script>
 
 <?php include 'templates/footer.php'; ?>
