@@ -70,14 +70,11 @@ $saved_categories = explode(',', $entry['kategori']);
                     <div class="col-12">
                         <label class="form-label">Category</label>
                         <div class="d-flex flex-wrap gap-2">
-                            <input type="checkbox" class="btn-check" id="kat_kuliner" name="kategori[]" value="Kuliner" <?= in_array('Kuliner', $saved_categories) ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-secondary" for="kat_kuliner">🍽️ Culinary</label>
+                            <input type="radio" class="btn-check" id="kat_kuliner" name="kategori" value="Place to Eat" <?= ($entry['kategori'] == 'Place to Eat') ? 'checked' : '' ?> required>
+                            <label class="btn btn-outline-secondary kategori-btn" for="kat_kuliner"><i class="bi bi-egg-fried text-dark"></i> Place to Eat</label>
 
-                            <input type="checkbox" class="btn-check" id="kat_petualangan" name="kategori[]" value="Petualangan" <?= in_array('Petualangan', $saved_categories) ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-secondary" for="kat_petualangan">⛰️ Adventure</label>
-
-                            <input type="checkbox" class="btn-check" id="kat_romantis" name="kategori[]" value="Romantis" <?= in_array('Romantis', $saved_categories) ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-secondary" for="kat_romantis">❤️ Romantic</label>
+                            <input type="radio" class="btn-check" id="kat_petualangan" name="kategori" value="Place to Go" <?= ($entry['kategori'] == 'Place to Go') ? 'checked' : '' ?> required>
+                            <label class="btn btn-outline-secondary kategori-btn" for="kat_petualangan"><i class="bi bi-signpost-split-fill text-dark"></i> Place to Go</label>
                         </div>
                     </div>
                     <div class="col-12">

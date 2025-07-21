@@ -32,23 +32,30 @@
                     <h5 class="mb-0"><i class="bi bi-list-check me-2 text-dark"></i>Details</h5>
                 </div>
                 <div class="card-body p-4">
+                    <div class="row">
+                        
+                    </div>
                     <div class="mb-3">
                         <label for="tanggal_kunjungan" class="form-label">Visit Date</label>
                         <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan" required>
                     </div>
                     <div class="mb-3">
-                        <label for="rating" class="form-label">Experience Rating (1-5)</label>
-                        <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" placeholder="Give a rating from 1 to 5" required>
+                        <label class="form-label">Experience Rating</label>
+                        <div class="star-rating">
+                            <input type="radio" id="5-stars" name="rating" value="5" /><label for="5-stars" class="bi bi-star-fill"></label>
+                            <input type="radio" id="4-stars" name="rating" value="4" /><label for="4-stars" class="bi bi-star-fill"></label>
+                            <input type="radio" id="3-stars" name="rating" value="3" /><label for="3-stars" class="bi bi-star-fill"></label>
+                            <input type="radio" id="2-stars" name="rating" value="2" /><label for="2-stars" class="bi bi-star-fill"></label>
+                            <input type="radio" id="1-star" name="rating" value="1" required /><label for="1-star" class="bi bi-star-fill"></label>
+                        </div>
                     </div>
                     <div>
                         <label class="form-label">Category</label>
                         <div class="d-flex flex-wrap gap-2">
-                            <input type="checkbox" class="btn-check" id="kat_kuliner" name="kategori[]" value="Culinary">
-                            <label class="btn btn-outline-secondary" for="kat_kuliner">🍽️ Culinary</label>
-                            <input type="checkbox" class="btn-check" id="kat_petualangan" name="kategori[]" value="Adventure">
-                            <label class="btn btn-outline-secondary" for="kat_petualangan">⛰️ Adventure</label>
-                            <input type="checkbox" class="btn-check" id="kat_romantis" name="kategori[]" value="Romantic">
-                            <label class="btn btn-outline-secondary" for="kat_romantis">❤️ Romantic</label>
+                            <input type="radio" class="btn-check" id="kat_kuliner" name="kategori" value="Place to Eat" required>
+                            <label class="btn btn-outline-secondary kategori-btn" for="kat_kuliner"><i class="bi bi-egg-fried text-dark"></i> Place to Eat</label>
+                            <input type="radio" class="btn-check" id="kat_petualangan" name="kategori" value="Place to Go" required>
+                            <label class="btn btn-outline-secondary kategori-btn" for="kat_petualangan"><i class="bi bi-signpost-split-fill text-dark"></i> Place to Go</label>
                         </div>
                     </div>
                 </div>
@@ -88,8 +95,7 @@
     </div>
 
     <div class="mt-4 text-end">
-        <a href="index.php" class="btn btn-light btn-lg">Cancel</a>
-        <button type="submit" class="btn btn-primary btn-lg px-5">Save Story</button>
+        <button type="submit" class="btn btn-dark btn-lg px-5">Save</button>
     </div>
 </form>
 

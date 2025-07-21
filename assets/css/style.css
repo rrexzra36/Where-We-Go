@@ -41,13 +41,9 @@ body {
     color: var(--text-primary);
 }
 .sidebar .nav-link.active {
-    background-color: var(--accent-active);
+    background-color: #191919;
     color: #FFFFFF;
 }
-.sidebar .nav-link.active:hover {
-    background-color: #4338CA;
-}
-
 /* --- Styling Halaman Utama & Umum --- */
 .greeting {
     font-weight: 700;
@@ -62,10 +58,15 @@ body {
     display: block;
     box-shadow: var(--shadow-sm);
 }
+.action-card h5{
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
 .action-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
-    border-color: var(--accent-blue);
+    border-color: var(--text-secondary);
 }
 .action-icon {
     width: 48px;
@@ -77,14 +78,18 @@ body {
     font-size: 1.5rem;
     color: #fff;
 }
-.action-icon.new-entry { background-color: var(--accent-blue); }
-.action-icon.map-view { background-color: var(--accent-green); }
+.action-icon.new-entry { background-color: var(--text-primary); }
+.action-icon.map-view { background-color: var(--text-primary); }
 .list-container {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 0.5rem;
     box-shadow: var(--shadow-sm);
+}
+.list-container a {
+    color: var(--text-primary);
+    font-weight: bold;
 }
 .entry-item {
     padding: 1rem;
@@ -123,8 +128,8 @@ body {
     padding: 0.75rem 1.25rem;
 }
 .btn-check:checked + .btn-outline-secondary {
-    background-color: var(--accent-blue);
-    border-color: var(--accent-blue);
+    background-color: var(--text-secondary);
+    border-color: var(--text-secondary);
     color: #fff;
 }
 .btn-outline-secondary {
@@ -223,4 +228,47 @@ body {
 }
 #map, #map-picker, #map-detail {
     border-radius: 8px;
+}
+
+/* --- Styling untuk Star Rating Component --- */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-size: 2rem;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #191919;
+}
+
+.btn-check:checked + .kategori-btn {
+    background-color: #212529 !important;
+    color: #fff !important;
+    border-color: #212529 !important;
+}
+.btn-check:checked + .kategori-btn i {
+    color: #fff !important;
+}
+/* --- STICKY FOOTER STYLES --- */
+.page-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main.container-fluid {
+    flex: 1; /* Mendorong konten utama untuk mengisi ruang yang tersedia */
 }

@@ -1,7 +1,7 @@
     </main> <!-- Closing <main> from header.php -->
 
     <footer class="text-center text-secondary py-4">
-        <small>&copy; <?= date('Y') ?> Our Travel Journal. Made with ❤️.</small>
+        <small>&copy; <?= date('Y') ?> Our Travel Journal. Made with <i class="bi bi-heart-fill text-dark"></i></small>
     </footer>
 
     </div> <!-- Closing .page-content-wrapper from header.php -->

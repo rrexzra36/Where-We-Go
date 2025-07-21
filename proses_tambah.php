@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $longitude = $_POST['longitude'];
     $description = $_POST['deskripsi'];
     $rating = $_POST['rating'];
-    $categories = isset($_POST['kategori']) ? implode(',', $_POST['kategori']) : '';
+    $categories = isset($_POST['kategori']) ? $_POST['kategori'] : '';
 
     $upload_dir = 'assets/uploads/';
     $photo_files = $_FILES['foto'];

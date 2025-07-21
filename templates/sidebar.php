@@ -5,7 +5,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 <div class="offcanvas offcanvas-start sidebar" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Travel Journal</h5>
+        <h5 class="offcanvas-title ms-2" id="sidebarOffcanvasLabel">Where We Go?</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">

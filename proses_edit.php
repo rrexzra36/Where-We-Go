@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $longitude = $_POST['longitude'];
     $deskripsi = $_POST['deskripsi'];
     $rating = $_POST['rating'];
-    $kategori = isset($_POST['kategori']) ? implode(',', $_POST['kategori']) : '';
+    $kategori = isset($_POST['kategori']) ? $_POST['kategori'] : '';
 
     try {
         // 1. Update data teks di tabel entri
