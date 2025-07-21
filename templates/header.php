@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal Perjalanan</title>
+    <title>Travel Journal</title>
 
     <!-- CSS Links (Bootstrap, Icons, Leaflet, Fonts, Custom) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,12 +16,12 @@
 
 <body>
 
-    <?php include 'sidebar.php'; // Memanggil sidebar offcanvas 
+    <?php include 'sidebar.php'; // Call sidebar offcanvas 
     ?>
 
-    <!-- Wrapper utama untuk semua konten halaman -->
+    <!-- Main wrapper for all page content -->
     <div class="page-content-wrapper">
-        <!-- Navbar atas yang berisi tombol toggle -->
+        <!-- Top navbar with toggle button -->
         <nav class="navbar navbar-light bg-white shadow-sm sticky-top">
             <div class="container-fluid">
                 <button class="btn btn-outline-secondary border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
@@ -30,5 +30,5 @@
             </div>
         </nav>
 
-        <!-- Konten dinamis dari setiap halaman akan masuk di sini -->
+        <!-- Dynamic content from each page will be placed here -->
         <main class="container-fluid p-4 p-md-5">

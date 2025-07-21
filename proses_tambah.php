@@ -3,73 +3,73 @@ session_start();
 require 'database/connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $judul = $_POST['judul'];
-    $tanggal_kunjungan = $_POST['tanggal_kunjungan'];
-    $lokasi_nama = $_POST['lokasi_nama'];
+    $title = $_POST['judul'];
+    $visit_date = $_POST['tanggal_kunjungan'];
+    $location_name = $_POST['lokasi_nama'];
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
-    $deskripsi = $_POST['deskripsi'];
+    $description = $_POST['deskripsi'];
     $rating = $_POST['rating'];
-    $kategori = isset($_POST['kategori']) ? implode(',', $_POST['kategori']) : '';
+    $categories = isset($_POST['kategori']) ? implode(',', $_POST['kategori']) : '';
 
     $upload_dir = 'assets/uploads/';
-    $foto_files = $_FILES['foto'];
+    $photo_files = $_FILES['foto'];
     $uploaded_files = [];
-    $foto_utama = '';
+    $main_photo = '';
 
-    // Proses upload file
-    foreach ($foto_files['name'] as $key => $name) {
-        if ($foto_files['error'][$key] === UPLOAD_ERR_OK) {
-            $tmp_name = $foto_files['tmp_name'][$key];
+    // Process file upload
+    foreach ($photo_files['name'] as $key => $name) {
+        if ($photo_files['error'][$key] === UPLOAD_ERR_OK) {
+            $tmp_name = $photo_files['tmp_name'][$key];
             $file_name = time() . '_' . basename($name);
             $upload_file = $upload_dir . $file_name;
 
             if (move_uploaded_file($tmp_name, $upload_file)) {
                 $uploaded_files[] = $file_name;
-                if (empty($foto_utama)) {
-                    $foto_utama = $file_name; // File pertama jadi foto utama
+                if (empty($main_photo)) {
+                    $main_photo = $file_name; // First file becomes the main photo
                 }
             }
         }
     }
 
-    if (empty($foto_utama)) {
-        // Handle error: tidak ada foto yang diupload
-        die("Error: Gagal mengunggah foto. Pastikan setidaknya satu foto diunggah.");
+    if (empty($main_photo)) {
+        // Handle error: no photo uploaded
+        die("Error: Failed to upload photo. Please make sure at least one photo is uploaded.");
     }
 
     try {
-        // Mulai transaksi
+        // Begin transaction
         $conn->beginTransaction();
 
-        // 1. Simpan entri utama
+        // 1. Save main entry
         $stmt = $conn->prepare("INSERT INTO entri (judul, tanggal_kunjungan, lokasi_nama, latitude, longitude, deskripsi, rating, kategori, foto_utama) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$judul, $tanggal_kunjungan, $lokasi_nama, $latitude, $longitude, $deskripsi, $rating, $kategori, $foto_utama]);
+        $stmt->execute([$title, $visit_date, $location_name, $latitude, $longitude, $description, $rating, $categories, $main_photo]);
 
-        // Dapatkan ID dari entri yang baru saja disimpan
-        $id_entri = $conn->lastInsertId();
+        // Get the ID of the newly inserted entry
+        $entry_id = $conn->lastInsertId();
 
-        // 2. Simpan foto galeri
+        // 2. Save gallery photos
         if (count($uploaded_files) > 1) {
-            $stmt_galeri = $conn->prepare("INSERT INTO galeri (id_entri, nama_file) VALUES (?, ?)");
-            // Mulai dari file kedua untuk galeri
+            $stmt_gallery = $conn->prepare("INSERT INTO galeri (id_entri, nama_file) VALUES (?, ?)");
+            // Start from the second file for the gallery
             for ($i = 1; $i < count($uploaded_files); $i++) {
-                $stmt_galeri->execute([$id_entri, $uploaded_files[$i]]);
+                $stmt_gallery->execute([$entry_id, $uploaded_files[$i]]);
             }
         }
 
-        // Commit transaksi
+        // Commit transaction
         $conn->commit();
 
-        // Set pesan sukses untuk SweetAlert
-        $_SESSION['status'] = 'sukses';
-        $_SESSION['pesan'] = 'Cerita perjalanan berhasil disimpan!';
+        // Set success message for SweetAlert
+        $_SESSION['status'] = 'success';
+        $_SESSION['message'] = 'Travel story saved successfully!';
         header('Location: index.php');
         exit();
     } catch (Exception $e) {
         $conn->rollBack();
-        $_SESSION['status'] = 'gagal';
-        $_SESSION['pesan'] = 'Terjadi kesalahan: ' . $e->getMessage();
+        $_SESSION['status'] = 'error';
+        $_SESSION['message'] = 'An error occurred: ' . $e->getMessage();
         header('Location: tambah.php');
         exit();
     }

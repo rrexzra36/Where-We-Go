@@ -2,7 +2,7 @@
 session_start();
 require 'database/connection.php';
 
-// Cek apakah ada ID, jika tidak, kembalikan ke index
+// Check if ID exists, if not, redirect to index
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header('Location: index.php');
     exit();
@@ -11,83 +11,83 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = $_GET['id'];
 $stmt = $conn->prepare("SELECT * FROM entri WHERE id = ?");
 $stmt->execute([$id]);
-$entri = $stmt->fetch(PDO::FETCH_ASSOC);
+$entry = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Jika entri dengan ID tersebut tidak ada
-if (!$entri) {
-    echo "Entri tidak ditemukan.";
+// If entry with the given ID does not exist
+if (!$entry) {
+    echo "Entry not found.";
     exit();
 }
 
-// Ubah string kategori menjadi array untuk dicocokkan di checkbox
-$kategori_tersimpan = explode(',', $entri['kategori']);
+// Convert category string to array for checkbox matching
+$saved_categories = explode(',', $entry['kategori']);
 ?>
 
 <?php include 'templates/header.php'; ?>
 
-<!-- Tambahkan CSS untuk Plugin Geocoder -->
+<!-- Add CSS for Geocoder Plugin -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
 <div class="page-content-wrapper">
     <main class="container-fluid p-4 p-md-5">
         <div class="content-header mb-4">
-            <h2 class="greeting"><i class="bi bi-pencil-square me-2"></i> Edit Kenangan</h2>
-            <p class="text-secondary">Perbarui detail petualangan Anda.</p>
+            <h2 class="greeting"><i class="bi bi-pencil-square me-2"></i> Edit Memory</h2>
+            <p class="text-secondary">Update your adventure details.</p>
         </div>
 
         <div class="form-container-card">
             <form action="proses_edit.php" method="POST" enctype="multipart/form-data">
-                <!-- Kirim ID entri secara tersembunyi -->
-                <input type="hidden" name="id" value="<?= $entri['id'] ?>">
+                <!-- Send entry ID as hidden -->
+                <input type="hidden" name="id" value="<?= $entry['id'] ?>">
 
                 <div class="row g-4">
                     <div class="col-12">
-                        <label for="judul" class="form-label">Judul Perjalanan</label>
-                        <input type="text" class="form-control form-control-lg" id="judul" name="judul" value="<?= htmlspecialchars($entri['judul']) ?>" required>
+                        <label for="judul" class="form-label">Trip Title</label>
+                        <input type="text" class="form-control form-control-lg" id="judul" name="judul" value="<?= htmlspecialchars($entry['judul']) ?>" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="tanggal_kunjungan" class="form-label">Tanggal Kunjungan</label>
-                        <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan" value="<?= $entri['tanggal_kunjungan'] ?>" required>
+                        <label for="tanggal_kunjungan" class="form-label">Visit Date</label>
+                        <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan" value="<?= $entry['tanggal_kunjungan'] ?>" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="rating" class="form-label">Rating Pengalaman (1-5)</label>
-                        <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" value="<?= $entri['rating'] ?>" required>
+                        <label for="rating" class="form-label">Experience Rating (1-5)</label>
+                        <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" value="<?= $entry['rating'] ?>" required>
                     </div>
                     <div class="col-12">
-                        <label for="lokasi_nama" class="form-label">Nama Lokasi</label>
-                        <input type="text" class="form-control" id="lokasi_nama" name="lokasi_nama" value="<?= htmlspecialchars($entri['lokasi_nama']) ?>" required>
+                        <label for="lokasi_nama" class="form-label">Location Name</label>
+                        <input type="text" class="form-control" id="lokasi_nama" name="lokasi_nama" value="<?= htmlspecialchars($entry['lokasi_nama']) ?>" required>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Pilih Lokasi di Peta</label>
-                        <input type="hidden" id="latitude" name="latitude" value="<?= $entri['latitude'] ?>">
-                        <input type="hidden" id="longitude" name="longitude" value="<?= $entri['longitude'] ?>">
+                        <label class="form-label">Pick Location on Map</label>
+                        <input type="hidden" id="latitude" name="latitude" value="<?= $entry['latitude'] ?>">
+                        <input type="hidden" id="longitude" name="longitude" value="<?= $entry['longitude'] ?>">
                         <div id="map-picker" style="height: 300px;"></div>
                     </div>
                     <div class="col-12">
-                        <label for="deskripsi" class="form-label">Cerita Perjalanan</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="6"><?= htmlspecialchars($entri['deskripsi']) ?></textarea>
+                        <label for="deskripsi" class="form-label">Trip Story</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="6"><?= htmlspecialchars($entry['deskripsi']) ?></textarea>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Kategori</label>
+                        <label class="form-label">Category</label>
                         <div class="d-flex flex-wrap gap-2">
-                            <input type="checkbox" class="btn-check" id="kat_kuliner" name="kategori[]" value="Kuliner" <?= in_array('Kuliner', $kategori_tersimpan) ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-secondary" for="kat_kuliner">🍽️ Kuliner</label>
+                            <input type="checkbox" class="btn-check" id="kat_kuliner" name="kategori[]" value="Kuliner" <?= in_array('Kuliner', $saved_categories) ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-secondary" for="kat_kuliner">🍽️ Culinary</label>
 
-                            <input type="checkbox" class="btn-check" id="kat_petualangan" name="kategori[]" value="Petualangan" <?= in_array('Petualangan', $kategori_tersimpan) ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-secondary" for="kat_petualangan">⛰️ Petualangan</label>
+                            <input type="checkbox" class="btn-check" id="kat_petualangan" name="kategori[]" value="Petualangan" <?= in_array('Petualangan', $saved_categories) ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-secondary" for="kat_petualangan">⛰️ Adventure</label>
 
-                            <input type="checkbox" class="btn-check" id="kat_romantis" name="kategori[]" value="Romantis" <?= in_array('Romantis', $kategori_tersimpan) ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-secondary" for="kat_romantis">❤️ Romantis</label>
+                            <input type="checkbox" class="btn-check" id="kat_romantis" name="kategori[]" value="Romantis" <?= in_array('Romantis', $saved_categories) ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-secondary" for="kat_romantis">❤️ Romantic</label>
                         </div>
                     </div>
                     <div class="col-12">
-                        <label for="foto" class="form-label">Unggah Foto Baru (Opsional)</label>
+                        <label for="foto" class="form-label">Upload New Photo (Optional)</label>
                         <input type="file" class="form-control" id="foto" name="foto[]" multiple>
-                        <div class="form-text">Kosongkan jika tidak ingin menambah foto. Foto lama tidak akan terhapus.</div>
+                        <div class="form-text">Leave empty if you don't want to add photos. Old photos will not be deleted.</div>
                     </div>
                     <div class="col-12 text-end">
-                        <a href="entri.php?id=<?= $entri['id'] ?>" class="btn btn-light me-2">Batal</a>
-                        <button type="submit" class="btn btn-primary btn-lg">Simpan Perubahan</button>
+                        <a href="entri.php?id=<?= $entry['id'] ?>" class="btn btn-light me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
                     </div>
                 </div>
             </form>
@@ -95,16 +95,16 @@ $kategori_tersimpan = explode(',', $entri['kategori']);
     </main>
 </div>
 
-<!-- Script untuk peta -->
+<!-- Script for map -->
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var initialLat = <?= $entri['latitude'] ?>;
-        var initialLng = <?= $entri['longitude'] ?>;
+        var initialLat = <?= $entry['latitude'] ?>;
+        var initialLng = <?= $entry['longitude'] ?>;
         var map = L.map('map-picker').setView([initialLat, initialLng], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        // Tampilkan marker di posisi awal
+        // Show marker at initial position
         var marker = L.marker([initialLat, initialLng]).addTo(map);
 
         function updateMarkerAndFields(latlng) {
