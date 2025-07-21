@@ -1,0 +1,226 @@
+/* Desain Dashboard Jurnal Perjalanan - Inspirasi Notion 2.0 */
+
+:root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bg-main: #F7F8FA;
+    --bg-card: #FFFFFF;
+    --text-primary: #191919;
+    --text-secondary: #6B7280;
+    --border-color: #E5E7EB;
+    --accent-blue: #3B82F6;
+    --accent-green: #10B981;
+    --accent-active: #4F46E5;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Styling untuk Bootstrap Offcanvas Sidebar --- */
+.sidebar.offcanvas {
+    width: 260px;
+    border-right: 1px solid var(--border-color);
+    box-shadow: none;
+}
+.sidebar .nav-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-radius: 6px;
+    margin-bottom: 0.25rem;
+    transition: all 0.2s ease;
+    padding: 0.75rem 1rem;
+}
+.sidebar .nav-link:hover {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+}
+.sidebar .nav-link.active {
+    background-color: var(--accent-active);
+    color: #FFFFFF;
+}
+.sidebar .nav-link.active:hover {
+    background-color: #4338CA;
+}
+
+/* --- Styling Halaman Utama & Umum --- */
+.greeting {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.action-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    display: block;
+    box-shadow: var(--shadow-sm);
+}
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-blue);
+}
+.action-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+}
+.action-icon.new-entry { background-color: var(--accent-blue); }
+.action-icon.map-view { background-color: var(--accent-green); }
+.list-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    box-shadow: var(--shadow-sm);
+}
+.entry-item {
+    padding: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    display: block;
+}
+.entry-item:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+.entry-item:hover {
+    background-color: var(--bg-main);
+}
+.entry-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+.entry-title {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* --- Styling Halaman Form (Tambah & Edit) --- */
+.form-container-card {
+    background-color: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+.form-control-lg {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.25rem;
+}
+.btn-check:checked + .btn-outline-secondary {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #fff;
+}
+.btn-outline-secondary {
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+.btn-outline-secondary:hover {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+}
+
+/* --- Styling Halaman Detail Entri (BARU) --- */
+.entry-cover-image-wrapper {
+    height: 35vh; /* Tinggi cover 35% dari tinggi layar */
+    margin: -2.5rem -2.5rem 0; /* Tarik keluar dari padding main content */
+    overflow: hidden;
+}
+.entry-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.entry-content-card {
+    background-color: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: -5rem; /* Tarik ke atas menimpa cover image */
+    position: relative;
+    box-shadow: var(--shadow-md);
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.entry-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+.entry-title-icon {
+    font-size: 2.5rem;
+    margin-right: 1rem;
+    vertical-align: middle;
+}
+.entry-main-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.entry-meta {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+.meta-item {
+    display: flex;
+    align-items: center;
+}
+.section-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+.entry-story {
+    line-height: 1.8;
+    font-size: 1.05rem;
+    color: #374151;
+}
+.gallery-sidebar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+.gallery-sidebar img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border: 1px solid var(--border-color);
+}
+.gallery-sidebar img:hover {
+    transform: scale(1.03);
+}
+
+/* --- Styling Halaman Peta Global --- */
+.map-container-card {
+    background-color: var(--bg-card);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+#map, #map-picker, #map-detail {
+    border-radius: 8px;
+}

@@ -1,0 +1,13 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Cari tombol toggle
+    const toggleButton = document.getElementById('sidebar-toggle');
+    
+    // Cari wrapper utama
+    const mainWrapper = document.getElementById('main-wrapper');
+
+    if (toggleButton && mainWrapper) {
+        toggleButton.addEventListener('click', function() {
+            mainWrapper.classList.toggle('sidebar-collapsed');
+        });
+    }
+});
