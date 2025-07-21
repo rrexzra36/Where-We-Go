@@ -37,9 +37,8 @@
                         <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan" required>
                     </div>
                     <div class="mb-3">
-                        <label for="rating" class="form-label">Experience Rating</label>
-                        <div id="rating-component" data-coreui-toggle="rating" data-coreui-value="3" data-coreui-highlight-only="true"></div>
-                        <input type="hidden" name="rating" id="rating-value" value="3">
+                        <label for="rating" class="form-label">Experience Rating (1-5)</label>
+                        <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" placeholder="Give a rating from 1 to 5" required>
                     </div>
                     <div>
                         <label class="form-label">Category</label>
