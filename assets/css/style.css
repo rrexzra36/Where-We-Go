@@ -144,22 +144,11 @@ body {
     color: var(--text-primary);
 }
 
-/* --- Styling Halaman Detail Entri (BARU) --- */
-.entry-cover-image-wrapper {
-    height: 35vh; /* Tinggi cover 35% dari tinggi layar */
-    margin: -2.5rem -2.5rem 0; /* Tarik keluar dari padding main content */
-    overflow: hidden;
-}
-.entry-cover-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+/* --- Entry Page --- */
 .entry-content-card {
     background-color: var(--bg-card);
     padding: 2rem;
     border-radius: 12px;
-    margin-top: -5rem; /* Tarik ke atas menimpa cover image */
     position: relative;
     box-shadow: var(--shadow-md);
     max-width: 1000px;

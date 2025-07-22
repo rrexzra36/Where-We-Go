@@ -40,8 +40,8 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 
                     var popupContent =
                         `<div class="text-center" style="width: 180px; color: #333; padding: 10px; border-radius: 5px;">
-                        <img src="assets/uploads/${lokasi.foto_utama}" class="img-fluid rounded mb-2" style="max-height: 100px; object-fit: cover;" alt="${lokasi.judul}">
-                        <h6 class="mb-2" style="font-size: 1em; font-weight: bold;">${lokasi.judul}</h6>
+                        <img src="assets/uploads/${lokasi.foto_utama}" class="img-fluid rounded mb-2" style="max-height: 100px; object-fit: cover;" alt="${lokasi.lokasi_nama}">
+                        <h6 class="mb-2" style="font-size: 1em; font-weight: bold;">${lokasi.lokasi_nama}</h6>
                         <a href="entri.php?id=${lokasi.id}" class="btn btn-sm" style="background-color: #333; color: #fff; border-radius: 3px; padding: 5px 10px; text-decoration: none;">View</a>
                         </div>`;
                     L.marker([lat, lng]).addTo(map).bindPopup(popupContent);
